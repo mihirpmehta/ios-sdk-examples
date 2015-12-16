@@ -53,16 +53,15 @@
     __weak typeof(self) weakSelf = self;
     [self.resourceManager fetchFloorPlanWithId:floorplanId andCompletion:^(IAFloorPlan *floorplan, NSError *error) {
        if (error) {
-           NSLog(@"opps, there was error during floorplan fetch: %@", error);
-           [weakSelf performSelector:@selector(fetchFloorplanWithId:) withObject:floorplanId afterDelay:2.0f];
+           NSLog(@"Error during floorplan fetch: %@", error);
            return;
        }
 
        NSLog(@"fetched floorplan with id: %@", floorplanId);
 
-       [self.resourceManager fetchFloorPlanImageWithId:floorplanId andCompletion:^(NSData *data, NSError *error) {
+       [self.resourceManager fetchFloorPlanImageWithUrl:floorplan.imageUrl andCompletion:^(NSData *data, NSError *error) {
            if (error) {
-               NSLog(@"opps, there was error during floorplan image fetch: %@", error);
+               NSLog(@"Error during floorplan image fetch: %@", error);
                return;
            }
 

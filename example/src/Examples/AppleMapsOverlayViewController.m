@@ -154,13 +154,13 @@
     [resourceManager fetchFloorPlanWithId:region.identifier andCompletion:^(IAFloorPlan *floorPlan, NSError *error) {
         if (!error) {
             self.floorPlan =floorPlan;
-            [resourceManager fetchFloorPlanImageWithId:region.identifier andCompletion:^(NSData *imageData, NSError *error){
+            [resourceManager fetchFloorPlanImageWithUrl:floorPlan.imageUrl andCompletion:^(NSData *imageData, NSError *error){
                  __weak typeof(self) weakSelf = self;
                 fpImage = [[UIImage alloc] initWithData:imageData];
                 [weakSelf changeMapOverlay];
             }];
         } else {
-            NSLog(@"Error fetching floorplan");
+            NSLog(@"There was error during floorplan fetch: %@", error);
         }
     }];
 }
